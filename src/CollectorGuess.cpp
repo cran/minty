@@ -10,9 +10,14 @@
 
 typedef bool (*canParseFun)(const std::string&, LocaleInfo* pLocale);
 
-bool canParse(
-    const cpp11::strings& x, const canParseFun& canParse, LocaleInfo* pLocale) {
+bool canParse(const cpp11::strings& x, const canParseFun& canParseF, LocaleInfo* pLocale,
+              unsigned int guess_max, bool trim_ws) {
+  unsigned int n = 0;
   for (const auto & i : x) {
+    n++;
+    if (n > guess_max) {
+      break;
+    }
     if (i == NA_STRING) {
       continue;
     }
@@ -20,8 +25,8 @@ bool canParse(
     if (i.size() == 0) {
       continue;
     }
-
-    if (!canParse(std::string(i), pLocale)) {
+    auto i_str = trim_ws ? trimString(std::string(i)) : std::string(i);
+    if (!canParseF(i_str, pLocale)) {
       return false;
     }
   }
@@ -122,7 +127,9 @@ static bool isDateTime(const std::string& x, LocaleInfo* pLocale) {
 [[cpp11::register]] std::string collectorGuess(
     const cpp11::strings& input,
     const cpp11::list& locale_,
-    bool guessInteger) {
+    bool guessInteger,
+    unsigned int guess_max,
+    bool trim_ws) {
   LocaleInfo locale(static_cast<SEXP>(locale_));
 
   if (input.size() == 0) {
@@ -134,25 +141,25 @@ static bool isDateTime(const std::string& x, LocaleInfo* pLocale) {
   }
 
   // Work from strictest to most flexible
-  if (canParse(input, isLogical, &locale)) {
+  if (canParse(input, isLogical, &locale, guess_max, trim_ws)) {
     return "logical";
   }
-  if (guessInteger && canParse(input, isInteger, &locale)) {
+  if (guessInteger && canParse(input, isInteger, &locale, guess_max, trim_ws)) {
     return "integer";
   }
-  if (canParse(input, isDouble, &locale)) {
+  if (canParse(input, isDouble, &locale, guess_max, trim_ws)) {
     return "double";
   }
-  if (canParse(input, isNumber, &locale)) {
+  if (canParse(input, isNumber, &locale, guess_max, trim_ws)) {
     return "number";
   }
-  if (canParse(input, isTime, &locale)) {
+  if (canParse(input, isTime, &locale, guess_max, trim_ws)) {
     return "time";
   }
-  if (canParse(input, isDate, &locale)) {
+  if (canParse(input, isDate, &locale, guess_max, trim_ws)) {
     return "date";
   }
-  if (canParse(input, isDateTime, &locale)) {
+  if (canParse(input, isDateTime, &locale, guess_max, trim_ws)) {
     return "datetime";
   }
 

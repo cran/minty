@@ -2,6 +2,7 @@
 #define FASTREAD_QI_PARSERS
 
 #include "Rinternals.h"
+#include <ctype.h> // tolower
 
 /*
     An STL iterator-based string to floating point number conversion.
@@ -17,10 +18,10 @@ bsd_strtod(const char* begin, const char** endptr, const char decimal_mark) {
   if (begin == *endptr) {
     return NA_REAL;
   }
-  if (*begin == 'n' || *begin == '?') {
-    *endptr = begin;
-    return NA_REAL;
-  }
+  // if (*begin == 'n' || *begin == '?') {
+  //   *endptr = begin;
+  //   return NA_REAL;
+  // }
   int sign = 0, expSign = 0, i;
   double fraction, dblExp;
   const char* p;
@@ -85,13 +86,23 @@ bsd_strtod(const char* begin, const char** endptr, const char decimal_mark) {
    * Strip off leading blanks and check for a sign.
    */
   p = begin;
-  while (p != *endptr && (*p == ' ' || *p == '\t'))
-    ++p;
   if (p != *endptr && *p == '-') {
     sign = 1;
     ++p;
   } else if (p != *endptr && *p == '+')
     ++p;
+
+  // Code ported from vroom
+  /* NaN */
+  if (*endptr - p == 3 && tolower(p[0]) == 'n' && tolower(p[1]) == 'a' &&
+      tolower(p[2]) == 'n') {
+    return NAN;
+  }
+  /* Inf */
+  if (*endptr - p == 3 && tolower(p[0]) == 'i' && tolower(p[1]) == 'n' &&
+      tolower(p[2]) == 'f') {
+    return sign == 1 ? -HUGE_VAL : HUGE_VAL;
+  }
 
   /* If we don't have a digit or decimal point something is wrong, so return an
    * NA */
