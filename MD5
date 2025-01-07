@@ -1,4 +1,4 @@
-eee1db96fb46e25371cd07218d3a6543 *DESCRIPTION
+4c97f1d219955be5be10ebef568719f8 *DESCRIPTION
 760ec452506d6228f970ecff84e07804 *LICENSE
 017b81a51a6a177b6fa696a20990cd4a *NAMESPACE
 8ca45b8c77b0f803170f4ab2d693e93b *R/cpp11.R
@@ -21,7 +21,7 @@ ccb7e7261a37689a21fe79a7894644d9 *man/parse_vector.Rd
 b25186fb2411b27ff10298c7ef36079c *man/type_convert.Rd
 26dfccb471c985640d9160080aed7f33 *src/Collector.cpp
 b61200ee6b32854b732a024126bb7710 *src/Collector.h
-a44e852def26cfaf9a1a901b3d1d8202 *src/CollectorGuess.cpp
+7b931ddacc35b6d972e6154db82bd38b *src/CollectorGuess.cpp
 06f7969e70359bbf1a42daa13d6e728e *src/DateTime.h
 56b54319923e88a2cbe8279b8bf0339c *src/DateTimeParser.h
 55aeda90bd832edef30dc15f18980311 *src/Iconv.cpp
@@ -42,7 +42,7 @@ b7f65e7ba80b88a331d6fd754d151e8c *src/SourceRaw.h
 4fed0747fab574572925015066bb37a0 *src/parse.cpp
 e99b01d67ffbe5ef924746fda2a238d5 *src/type_convert.cpp
 d261cb4daf619cef259029b993429e7e *src/tzfile.h
-082a8071e959967235d23f45a346bf1f *src/utils.h
+862557e6e224cb49c10029c9b5ba3c41 *src/utils.h
 d05f314c7fc1a2237d835baafbaa285c *tests/testthat.R
 e028c99283782efccfcd745b0db83ede *tests/testthat/_snaps/edition-2/col-spec.md
 b60784d9703d6a232f1e737447a511e6 *tests/testthat/test-col-spec.R
@@ -54,5 +54,5 @@ ab99d8916e5e805499d50a0e3e81855d *tests/testthat/test-parsing-factors.R
 2a73f7ac0f0f634811e90149755e097a *tests/testthat/test-parsing-logical.R
 d6f64eae1ec0168574dad7733a9e8406 *tests/testthat/test-parsing-numeric.R
 79180edb253df04673477b975b072f28 *tests/testthat/test-parsing-time.R
-722ac1edb1a4830d4a8cb00709e6db5c *tests/testthat/test-parsing.R
-d3966edad6307c07f27da88147424fe0 *tests/testthat/test-type-convert.R
+1d3c66f2f6b1f9f488967042b56c70a7 *tests/testthat/test-parsing.R
+c08b628a103bf30694d33be5f78eca90 *tests/testthat/test-type-convert.R
